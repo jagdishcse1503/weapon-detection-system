@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register | Weapon Detection</title>
+    <style>
+        body { font-family: Poppins, sans-serif; background: #111; color: #fff; text-align: center; }
+        form { display: inline-block; margin-top: 80px; background: #222; padding: 30px; border-radius: 12px; }
+        input { display: block; width: 250px; margin: 10px auto; padding: 8px; border-radius: 6px; border: none; }
+        button { background: #00d4ff; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🔐 Register</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+        <p>Already have an account? <a href="{% url 'login' %}" style="color:#00d4ff;">Login</a></p>
+    </form>
+</body>
+</html>

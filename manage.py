@@ -1,0 +1,32 @@
+"""Django's command-line utility for administrative tasks."""
+import os
+import sys
+import ssl
+import certifi
+import smtplib
+
+# ✅ Force all SSL operations (including smtplib) to use certifi's CA bundle
+os.environ['SSL_CERT_FILE'] = certifi.where()
+os.environ['REQUESTS_CA_BUNDLE'] = certifi.where()
+
+# ✅ Monkey-patch smtplib to use certifi cert store
+ssl_context = ssl.create_default_context(cafile=certifi.where())
+smtplib.SMTP_SSL.default_context = ssl_context
+
+def main():
+    """Run administrative tasks."""
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Weapon_Detection.settings')
+    try:
+        from django.core.management import execute_from_command_line
+    except ImportError as exc:
+        raise ImportError(
+            "Couldn't import Django. Are you sure it's installed and "
+            "available on your PYTHONPATH environment variable? Did you "
+            "forget to activate a virtual environment?"
+        ) from exc
+    execute_from_command_line(sys.argv)
+
+
+if __name__ == '__main__':
+    main()
+
